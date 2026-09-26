@@ -22,6 +22,7 @@ body{font-family:system-ui,sans-serif;margin:0;background:#f5f7fb;color:#172033}
 <script>
 const SUPABASE_URL='https://adqyigwnotfvboblmlyr.supabase.co';
 const SUPABASE_KEY='sb_publishable_nSh-mNWE6erSAfRsS7-IHA_Zgjk-xmA';
+const APP_URL='https://nehaghosh910-cmyk.github.io/sme-financial-diagnostic/';
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const $=id=>document.getElementById(id);
 let aid=null;
@@ -34,7 +35,7 @@ async function signup(){
   const email=$('email').value.trim(), password=$('password').value;
   if(!email||!password){authMsg('Enter an email address and password.','error');return}
   try{
-    const {data,error}=await sb.auth.signUp({email,password});
+    const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:APP_URL}});
     if(error){authMsg(error.message,'error');return}
     if(data.session){authMsg('Account created. Signing you in…','success');await start()}
     else authMsg('Account created. Check your email for the confirmation link, then sign in.','success');
